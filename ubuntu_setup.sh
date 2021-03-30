@@ -43,6 +43,7 @@ sudo apt-get update && sudo apt-get install -y \
     opencl-headers \
     python-dev \
     python3-pip \
+    qml-module-qtquick2 \
     qt5-default \
     qtmultimedia5-dev \
     qtwebengine5-dev \
@@ -50,7 +51,8 @@ sudo apt-get update && sudo apt-get install -y \
     sudo \
     vim \
     wget \
-    gcc-arm-none-eabi
+    gcc-arm-none-eabi \
+    python-numpy
 
 # install git lfs
 if ! command -v "git-lfs" > /dev/null 2>&1; then
@@ -85,6 +87,7 @@ pyenv install -s 3.8.5
 pyenv global 3.8.5
 pyenv rehash
 eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 # **** in python env ****
 
@@ -94,7 +97,12 @@ pip install --upgrade pip==20.2.4
 # install pipenv
 pip install pipenv==2020.8.13
 
+#install reqs
+pipenv install numpy tensorflow scons jinja2 cython sympy cffi
+
 # pipenv setup (in openpilot dir)
+pipenv install --dev
+pipenv install --dev --system
 pipenv install --dev --system --deploy
 
 # for loggerd to work on ubuntu
